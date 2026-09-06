@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="mb-4">My <span class="text-gradient">Dashboard</span></h2>
+        <div class="row g-4">
+            {% for a in assignments %}
+            <div class="col-md-6 col-lg-4">
+                <div class="tsl-card h-100">
+                    <h5>{{ a.test.title }}</h5>
+                    <p class="text-muted-custom small mb-2">{{ a.test.description|truncatewords:15 }}</p>
+                    <p class="mb-1 small"><i class="fa-regular fa-clock me-1"></i> {{ a.test.start_time }} to {{ a.test.end_time }}</p>
+                    <p class="mb-3 small"><i class="fa-solid fa-hourglass-half me-1"></i> Duration: {{ a.test.duration_minutes }} min</p>
+
+                    {% if a.status == 'completed' %}
+                    <span class="tsl-badge tsl-badge-success mb-2 d-inline-block">Completed - {{ a.total_score }}/{{ a.max_score }}</span><br>
+                    <a href="{% url 'test_result' a.id %}" class="tsl-btn-outline d-block text-center">View Result</a>
+                    {% elif a.status == 'ongoing' %}
+                    <span class="tsl-badge tsl-badge-warning mb-2 d-inline-block">Ongoing</span><br>
+                    <a href="{% url 'start_test' a.id %}" class="tsl-btn-primary d-block text-center">
+                        {% if a.started_at %}Resume Test{% else %}Start Test{% endif %}
+                    </a>
+                    {% elif a.status == 'missed' %}
+                    <span class="tsl-badge tsl-badge-danger">Missed</span>
+                    {% else %}
+                    <span class="tsl-badge tsl-badge-warning">Upcoming</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted-custom">No tests assigned yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

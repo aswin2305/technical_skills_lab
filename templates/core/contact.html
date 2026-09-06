@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Contact | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 650px;">
+        <h1 class="mb-4 text-center">Get in <span class="text-gradient">Touch</span></h1>
+        <div class="tsl-card">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label>Name</label>
+                    {{ form.name }}
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="mb-3">
+                    <label>Subject</label>
+                    {{ form.subject }}
+                </div>
+                <div class="mb-3">
+                    <label>Message</label>
+                    {{ form.message }}
+                </div>
+                <button type="submit" class="tsl-btn-primary w-100">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Result | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="mb-4">Result: <span class="text-gradient">{{ assignment.test.title }}</span></h2>
+        <div class="tsl-card mb-4 text-center">
+            <h1 class="text-gradient">{{ assignment.total_score }} / {{ assignment.max_score }}</h1>
+            <p class="text-muted-custom mb-0">Submitted at {{ assignment.submitted_at }}</p>
+        </div>
+
+        {% for s in submissions %}
+        <div class="tsl-card mb-3">
+            <div class="d-flex justify-content-between">
+                <h5>{{ s.question.title }}</h5>
+                <span class="tsl-badge tsl-badge-success">{{ s.score }} / {{ s.max_score }}</span>
+            </div>
+            <table class="table tsl-table mt-3 mb-0">
+                <thead><tr><th>Input</th><th>Expected</th><th>Your Output</th><th>Result</th></tr></thead>
+                <tbody>
+                    {% for r in s.test_case_results %}
+                    <tr>
+                        <td class="mono">{{ r.input }}</td>
+                        <td class="mono">{{ r.expected }}</td>
+                        <td class="mono">{{ r.actual }}</td>
+                        <td>
+                            {% if r.passed %}
+                                <span class="tsl-badge tsl-badge-success">Passed</span>
+                            {% else %}
+                                <span class="tsl-badge tsl-badge-danger">Failed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

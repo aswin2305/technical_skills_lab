@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Manage Candidates | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Manage <span class="text-gradient">Candidates</span></h2>
+            <a href="{% url 'create_candidate' %}" class="tsl-btn-primary"><i class="fa-solid fa-plus me-1"></i> New
+                Candidate</a>
+        </div>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Department</th>
+                        <th>Year</th>
+                        <th>Batch</th>
+                        <th>Group</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in candidates %}
+                    <tr>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.user.username }}</td>
+                        <td>{{ c.department }}</td>
+                        <td>{{ c.get_year_display }}</td>
+                        <td>{{ c.batch_display }}</td>
+                        <td>{{ c.group.name|default:"—" }}</td>
+                        <td>{{ c.email }}</td>
+                        <td>
+                            <a href="{% url 'edit_candidate' c.pk %}" class="btn btn-sm tsl-btn-outline">Edit</a>
+                            <a href="{% url 'reset_password' c.pk %}" class="btn btn-sm tsl-btn-outline">Reset Pwd</a>
+                            <a href="{% url 'delete_candidate' c.pk %}" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Delete this candidate?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted-custom py-4">No candidates yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

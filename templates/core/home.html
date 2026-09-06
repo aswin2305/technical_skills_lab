@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 mb-3">Code. Submit. <span class="text-gradient">Get Graded — Instantly.</span></h1>
+                <p class="text-muted-custom fs-5 mb-4">
+                    Technical Skills Lab is a web-based platform for conducting and auto-grading
+                    programming assessments in C, C++, Java, Python, and SQL.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="/login/student/" class="tsl-btn-primary">Student Login</a>
+                    <a href="/login/admin/" class="tsl-btn-outline">Admin Login</a>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-5 mt-lg-0">
+                <div class="tsl-card">
+                    <pre class="mono mb-0" style="color:#22d3ee;">
+def check_prime(n):
+    if n &lt; 2:
+        return False
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            return False
+    return True
+
+<span style="color:#22c55e;"># ✔ All test cases passed (5/5)</span>
+</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" style="background:var(--bg-secondary);">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Technical Skills Lab?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="tsl-card h-100">
+                    <i class="fa-solid fa-bolt fs-2 mb-3" style="color:var(--accent-primary);"></i>
+                    <h5>Instant Auto-Grading</h5>
+                    <p class="text-muted-custom">Get your score the moment you submit — no waiting for manual
+                        correction.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tsl-card h-100">
+                    <i class="fa-solid fa-shield-halved fs-2 mb-3" style="color:var(--accent-secondary);"></i>
+                    <h5>Secure Sandboxed Execution</h5>
+                    <p class="text-muted-custom">Code runs safely in isolated containers, supporting 5 languages.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tsl-card h-100">
+                    <i class="fa-solid fa-chart-line fs-2 mb-3" style="color:var(--accent-success);"></i>
+                    <h5>Detailed Reports</h5>
+                    <p class="text-muted-custom">Admins get exportable, group-wise performance reports in one click.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

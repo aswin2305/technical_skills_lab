@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Profile | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 600px;">
+        <h2 class="mb-4">My <span class="text-gradient">Profile</span></h2>
+        <div class="tsl-card">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email|default:"Not set" }}</p>
+            <p><strong>Role:</strong> {{ user.profile.role|title }}</p>
+            <!-- <a href="{% url 'change_password' %}" class="tsl-btn-primary mt-3 d-inline-block">Change Password</a> -->
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block title %}Edit Question | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 850px;">
+        <h2 class="mb-4">Edit <span class="text-gradient">{{ question.title }}</span></h2>
+        <div class="tsl-card mb-4">
+            <form method="POST" novalidate id="questionForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label>Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="mb-3">
+                    <label>Language</label>
+                    {{ form.language }}
+                </div>
+                <div class="mb-3">
+                    <label>Problem Statement</label>
+                    {{ form.prompt }}
+                </div>
+                <div class="mb-3">
+                    <label>Reference Solution</label>
+                    {{ form.reference_solution }}
+                </div>
+                <div class="mb-3">
+                    <label>Marks</label>
+                    {{ form.marks }}
+                </div>
+
+                <div id="sqlFieldsWrapper" class="d-none">
+                    <hr style="border-color: var(--border-glass);">
+                    <div class="mb-3">
+                        <label>SQL Setup Script</label>
+                        {{ form.sql_setup_script }}
+                    </div>
+                    <div class="mb-3">
+                        <label>SQL Reference Query</label>
+                        {{ form.sql_reference_query }}
+                    </div>
+                </div>
+
+                <hr style="border-color: var(--border-glass);">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Test Cases</h5>
+                    <button type="button" id="addTestCaseBtn" class="tsl-btn-outline btn-sm">+ Add Test Case</button>
+                </div>
+
+                {{ formset.management_form }}
+                <div id="testCaseContainer">
+                    {% for tc_form in formset %}
+                    <div class="tsl-card mb-3 testcase-row">
+                        <div class="row">
+                            <div class="col-md-5 mb-2">
+                                <label>Input</label>
+                                {{ tc_form.input_data }}
+                            </div>
+                            <div class="col-md-5 mb-2">
+                                <label>Expected Output</label>
+                                {{ tc_form.expected_output }}
+                            </div>
+                            <div class="col-md-2 mb-2 d-flex align-items-center gap-2">
+                                <div>
+                                    <label class="d-block">Hidden?</label>
+                                    {{ tc_form.is_hidden }}
+                                </div>
+                                {% if tc_form.DELETE %}
+                                <div>{{ tc_form.DELETE }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="tsl-btn-primary w-100 mt-3">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const languageSelect = document.getElementById('id_language');
+    const sqlWrapper = document.getElementById('sqlFieldsWrapper');
+
+    function toggleSqlFields() {
+        if (languageSelect.value === 'sql') {
+            sqlWrapper.classList.remove('d-none');
+        } else {
+            sqlWrapper.classList.add('d-none');
+        }
+    }
+    languageSelect.addEventListener('change', toggleSqlFields);
+    toggleSqlFields();
+
+    const addBtn = document.getElementById('addTestCaseBtn');
+    const container = document.getElementById('testCaseContainer');
+    const totalFormsInput = document.querySelector('input[name="test_cases-TOTAL_FORMS"]');
+
+    addBtn.addEventListener('click', function () {
+        const formCount = parseInt(totalFormsInput.value);
+        const newRow = document.createElement('div');
+        newRow.className = 'tsl-card mb-3 testcase-row';
+        newRow.innerHTML = `
+            <div class="row">
+                <div class="col-md-5 mb-2">
+                    <label>Input</label>
+                    <textarea name="test_cases-${formCount}-input_data" class="form-control tsl-input mono" rows="2" placeholder="Input (stdin) — leave blank if none"></textarea>
+                </div>
+                <div class="col-md-5 mb-2">
+                    <label>Expected Output</label>
+                    <textarea name="test_cases-${formCount}-expected_output" class="form-control tsl-input mono" rows="2" placeholder="Expected output"></textarea>
+                </div>
+                <div class="col-md-2 mb-2 d-flex align-items-center gap-2">
+                    <div>
+                        <label class="d-block">Hidden?</label>
+                        <input type="checkbox" name="test_cases-${formCount}-is_hidden" class="form-check-input">
+                    </div>
+                </div>
+            </div>
+        `;
+        container.appendChild(newRow);
+        totalFormsInput.value = formCount + 1;
+    });
+</script>
+{% endblock %}

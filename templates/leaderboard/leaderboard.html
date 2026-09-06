@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Leaderboard | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="mb-4">🏆 <span class="text-gradient">Leaderboard</span></h2>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Tests Taken</th>
+                        <th>Total Score</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in ranking %}
+                    <tr>
+                        <td>
+                            {% if entry.rank == 1 %}🥇
+                            {% elif entry.rank == 2 %}🥈
+                            {% elif entry.rank == 3 %}🥉
+                            {% else %}{{ entry.rank }}
+                            {% endif %}
+                        </td>
+                        <td>{{ entry.candidate.name }}</td>
+                        <td>{{ entry.candidate.department }}</td>
+                        <td>{{ entry.tests_taken }}</td>
+                        <td>{{ entry.total_score }} / {{ entry.total_max }}</td>
+                        <td>
+                            <span class="tsl-badge tsl-badge-success">{{ entry.percentage }}%</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted-custom py-4">No completed tests yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

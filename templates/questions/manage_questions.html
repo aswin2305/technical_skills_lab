@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Manage Questions | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Manage <span class="text-gradient">Questions</span></h2>
+            <a href="{% url 'create_question' %}" class="tsl-btn-primary"><i class="fa-solid fa-plus me-1"></i> New
+                Question</a>
+        </div>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Language</th>
+                        <th>Marks</th>
+                        <th>Test Cases</th>
+                        <th>Used in Tests</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for q in questions %}
+                    <tr>
+                        <td>{{ q.title }}</td>
+                        <td><span class="tsl-badge tsl-badge-success">{{ q.get_language_display }}</span></td>
+                        <td>{{ q.marks }}</td>
+                        <td>{{ q.test_cases.count }}</td>
+                        <td>{{ q.usage_count }}</td>
+                        <td>
+                            <a href="{% url 'edit_question' q.pk %}" class="btn btn-sm tsl-btn-outline">Edit</a>
+                            <a href="{% url 'delete_question' q.pk %}" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Delete this question?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted-custom py-4">No questions yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

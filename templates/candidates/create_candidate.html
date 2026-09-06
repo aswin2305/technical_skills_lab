@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Create Candidate | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 700px;">
+        <h2 class="mb-4">Create <span class="text-gradient">Candidate</span></h2>
+        <div class="tsl-card">
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Username</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Full Name</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Password</label>
+                        {{ form.password }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Confirm Password</label>
+                        {{ form.confirm_password }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Institution</label>
+                        {{ form.institution }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Department</label>
+                        {{ form.department }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Program Level</label>
+                        {{ form.program_level }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Degree</label>
+                        {{ form.degree }}
+                        <datalist id="degree-options">
+                            <option value="B.E.">
+                            <option value="B.Tech.">
+                        </datalist>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Year</label>
+                        {{ form.year }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Candidate Group</label>
+                        {{ form.group }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Batch From (Year)</label>
+                        {{ form.batch_from }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label>Batch To (Year)</label>
+                        {{ form.batch_to }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Email</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Mobile Number</label>
+                        {{ form.mobile_number }}
+                    </div>
+                </div>
+                <button type="submit" class="tsl-btn-primary w-100 mt-2">Create Candidate</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

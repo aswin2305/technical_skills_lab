@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Manage Tests | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Manage <span class="text-gradient">Tests</span></h2>
+            <a href="{% url 'assign_test' %}" class="tsl-btn-primary">+ Assign New Test</a>
+        </div>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Group</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Duration</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in tests %}
+                    <tr>
+                        <td>{{ t.title }}</td>
+                        <td>{{ t.candidate_group.name }}</td>
+                        <td>{{ t.start_time }}</td>
+                        <td>{{ t.end_time }}</td>
+                        <td>{{ t.duration_minutes }} min</td>
+                        <td>
+                            <a href="{% url 'view_report' t.id %}" class="btn btn-sm tsl-btn-outline">Report</a>
+                            <a href="{% url 'edit_test' t.id %}" class="btn btn-sm tsl-btn-outline">Edit</a>
+                            <a href="{% url 'delete_test' t.id %}" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Delete this test? All related student submissions and scores will also be deleted.');">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted-custom py-4">No tests yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Manage Candidate Groups | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Manage <span class="text-gradient">Candidate Groups</span></h2>
+            <a href="{% url 'create_group' %}" class="tsl-btn-primary"><i class="fa-solid fa-plus me-1"></i> New
+                Group</a>
+        </div>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Group Name</th>
+                        <th>Department</th>
+                        <th>Total Candidates</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for g in groups %}
+                    <tr>
+                        <td>{{ g.name }}</td>
+                        <td>{{ g.department|default:"—" }}</td>
+                        <td>{{ g.total_candidates }}</td>
+                        <td>
+                            <a href="{% url 'edit_group' g.pk %}" class="btn btn-sm tsl-btn-outline">Edit</a>
+                            <a href="{% url 'delete_group' g.pk %}" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Delete this group?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted-custom py-4">No groups yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

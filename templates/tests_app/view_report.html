@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Test Report | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Report: <span class="text-gradient">{{ test.title }}</span></h2>
+            <a href="{% url 'export_report_excel' test.id %}" class="tsl-btn-primary">
+                <i class="fa-solid fa-file-excel me-1"></i> Export Excel
+            </a>
+        </div>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Group</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Max</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in assignments %}
+                    <tr>
+                        <td>{{ a.candidate.name }}</td>
+                        <td>{{ a.candidate.user.username }}</td>
+                        <td>{{ a.candidate.group.name|default:"—" }}</td>
+                        <td>
+                            {% if a.status == 'completed' %}
+                            <span class="tsl-badge tsl-badge-success">Completed</span>
+                            {% elif a.status == 'ongoing' %}
+                            <span class="tsl-badge tsl-badge-warning">Ongoing</span>
+                            {% elif a.status == 'missed' %}
+                            <span class="tsl-badge tsl-badge-danger">Missed</span>
+                            {% else %}
+                            <span class="tsl-badge tsl-badge-warning">Upcoming</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ a.total_score }}</td>
+                        <td>{{ a.max_score }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted-custom py-4">No assignments yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

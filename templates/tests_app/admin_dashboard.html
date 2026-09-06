@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard | Technical Skills Lab{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="mb-4">Admin <span class="text-gradient">Dashboard</span></h2>
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="tsl-card text-center">
+                    <h3>{{ total_students }}</h3>
+                    <p class="text-muted-custom mb-0">Total Students</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tsl-card text-center">
+                    <h3>{{ total_tests }}</h3>
+                    <p class="text-muted-custom mb-0">Total Tests</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="tsl-card text-center">
+                    <h3>{{ total_submissions }}</h3>
+                    <p class="text-muted-custom mb-0">Total Submissions</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-3 mb-4">
+            <a href="{% url 'assign_test' %}" class="tsl-btn-primary">+ Assign New Test</a>
+            <a href="{% url 'create_question' %}" class="tsl-btn-outline">+ Create Question</a>
+            <a href="{% url 'create_candidate' %}" class="tsl-btn-outline">+ Add Candidate</a>
+            <a href="{% url 'create_group' %}" class="tsl-btn-outline">+ Add Candidate Group</a>
+        </div>
+
+        <h5 class="mb-3">Recent Tests</h5>
+        <div class="table-responsive tsl-table">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Group</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Report</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in recent_tests %}
+                    <tr>
+                        <td>{{ t.title }}</td>
+                        <td>{{ t.candidate_group.name }}</td>
+                        <td>{{ t.start_time }}</td>
+                        <td>{{ t.end_time }}</td>
+                        <td><a href="{% url 'view_report' t.id %}" class="btn btn-sm tsl-btn-outline">View</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted-custom py-4">No tests yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,34 @@
+.tsl-navbar {
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-glass);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.tsl-brand {
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--text-primary) !important;
+}
+
+.tsl-brand span {
+    color: var(--accent-primary);
+}
+
+.tsl-navbar .nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+}
+
+.tsl-navbar .nav-link:hover {
+    color: var(--text-primary) !important;
+}
+
+.tsl-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-glass);
+    color: var(--text-secondary);
+}
